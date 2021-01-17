@@ -6,6 +6,9 @@ class Compass:
     def __init__(self, degrees=0):
         self.degrees = degrees
     
+    def reset(self):
+        self.degrees = 0
+
     def inc(self, interval=1, currentDegrees=None):
 
         if interval <= 0:
@@ -24,7 +27,7 @@ class Compass:
             self.degrees = innerDegrees
 
 
-def dec(self, interval=1, currentDegrees=None):
+    def dec(self, interval=1, currentDegrees=None):
 
         if interval <= 0:
             raise ValueError("Interval must be higher than 0.")

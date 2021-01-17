@@ -1,0 +1,2 @@
+NAV_OBS_1 = "NAV_OBS:1"
+NAV_OBS_2 = "NAV_OBS:2"

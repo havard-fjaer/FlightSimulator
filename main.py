@@ -1,29 +1,18 @@
-"""
-Maps controllers to SimConnect
-"""
 import pygame
 from SimConnect import *
-from vpc_control_panel_1 import VpcControlPanel1
+from vor_adapter import VorAdapter
 
-# pygame
+# State
+DONE = False
+
+# Initialize pygame
 pygame.init()
 screen = pygame.display.set_mode((200, 50))
-DONE = False
-clock = pygame.time.Clock()
-pygame.joystick.init()
+
+# Initialize joysticks
 joysticks = []
+pygame.joystick.init()
 joystick_count = pygame.joystick.get_count()
-
-# SimConnect
-
-
-sm = SimConnect()
-
-
-
-
-vpc_panel = VpcControlPanel1(sm)
-
 print("Found devices:")
 for i in range(joystick_count):
     joysticks.append(pygame.joystick.Joystick(i))
@@ -33,14 +22,17 @@ for i in range(joystick_count):
             id=joysticks[i].get_id(),
         ))
 
+# SimConnect and adapters
+sim_connect = SimConnect()
+vor_adapter = VorAdapter(sim_connect)
 
-
-
+# Check for events
 while not DONE:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             DONE = True
-        vpc_panel.handle_event(event)
+        vor_adapter.handle_event(event)
 
-
+# Quit
+sim_connect.exit()
 pygame.quit()
