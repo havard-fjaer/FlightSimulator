@@ -80,9 +80,9 @@ while not done:
     textPrint.indent()
 
     # For each joystick:
-    for i in range(joystick_count):
+    for i in range(1):
         
-        joystick = pygame.joystick.Joystick(i)
+        joystick = pygame.joystick.Joystick(3)
         joystick.init()
 
         try:

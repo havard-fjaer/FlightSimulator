@@ -1,12 +1,12 @@
-
 """
 Connects joystick events to sim connect Omni Bearing Selector (OBS) variables and VHF omnidirectional radio range (VOR) events.
 """
 import pygame
 from SimConnect import *
-from compass import *
-import sim_connect_event
-import sim_connect_variable
+from components.compass import *
+from constants import sim_connect_event
+from constants import sim_connect_variable
+from constants import controller_vpc_panel
 
 ACTION_VOR1 = "VOR1"
 ACTION_VOR2 = "VOR2"
@@ -33,15 +33,15 @@ class VorAdapter:
 
         # VOR2
         elif self.current_action == ACTION_VOR2:
-            obs2 = self.event_to_compass(event, int(self.aircraft_requests.get(sim_connect_variable.NAV_OBS_1)))
+            obs2 = self.event_to_compass(event, int(self.aircraft_requests.get(sim_connect_variable.NAV_OBS_2)))
             print("Setting VOR2 to {degrees}".format(degrees=obs2.degrees))
             self.vor2_set(obs2.degrees)
 
     def event_to_current_action(self, event):
         if event.type == pygame.JOYBUTTONUP:
-            if event.button == 36:
+            if event.button == controller_vpc_panel.B1:
                 self.current_action = ACTION_VOR1
-            elif event.button == 37:
+            elif event.button == controller_vpc_panel.B2:
                 self.current_action = ACTION_VOR2
     
     def is_compass_event(self, event):
@@ -53,19 +53,22 @@ class VorAdapter:
 
     def event_to_compass(self, event, degrees):
         compass = Compass(degrees)
-        if event.button == 0 or event.button == 3 or event.button == 6:
+        if (event.button == controller_vpc_panel.E1_DOWN or
+            event.button == controller_vpc_panel.E2_DOWN or
+            event.button == controller_vpc_panel.E3_DOWN
+        ):
             compass.reset()
-        elif event.button == 7:
+        elif event.button == controller_vpc_panel.E3_CW:
             compass.inc()
-        elif event.button == 8:                
+        elif event.button == controller_vpc_panel.E3_CCW:
             compass.dec()
-        elif event.button == 4:
+        elif event.button == controller_vpc_panel.E2_CW:
             compass.inc(5)
-        elif event.button == 5:
+        elif event.button == controller_vpc_panel.E2_CCW:
             compass.dec(5)
-        elif event.button == 1:
+        elif event.button == controller_vpc_panel.E1_CW:
             compass.inc(30)
-        elif event.button == 2:
+        elif event.button == controller_vpc_panel.E1_CCW:
             compass.dec(30)
         return compass
 

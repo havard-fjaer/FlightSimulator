@@ -1,7 +1,7 @@
+"""
+Encapsulates how to handle the transition between 359 and 0 degrees when rotating a compass.
+"""
 class Compass: 
-    
-    def __init__(self):    
-        self.degrees = 0    
     
     def __init__(self, degrees=0):
         self.degrees = degrees
@@ -25,7 +25,6 @@ class Compass:
             self.degrees = innerDegrees - 360
         else:
             self.degrees = innerDegrees
-
 
     def dec(self, interval=1, currentDegrees=None):
 

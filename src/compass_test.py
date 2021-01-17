@@ -1,5 +1,5 @@
 import unittest
-from compass import Compass
+from components.compass import *
 
 class CompassTest(unittest.TestCase):
 
@@ -59,8 +59,6 @@ class CompassTest(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             compass.inc(interval=360)
         self.assertTrue("Interval must be 359 or lower." in str(context.exception))
-
-
 
 if __name__ == '__main__':
     unittest.main()
